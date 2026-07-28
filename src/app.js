@@ -11,16 +11,18 @@ const router = require('./routes/task.routes');
 const errorMiddleware = require('./middlewares/error.middelware')
 
 
-app.use(helmet());
+app.use(helmet({
+    contentSecurityPolicy: false,
+}));
 
-app.use(async (req, res, next) => {
+const ensureDB = async (req, res, next) => {
     try {
         await connectDB();
         next();
     } catch (error) {
         next(error);
     }
-});
+};
 
 
 app.use(cors({
@@ -42,7 +44,7 @@ app.get('/', (req, res) => {
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use('/tasks', router);
+app.use('/tasks', ensureDB, router);
 
 app.use(errorMiddleware)
 
