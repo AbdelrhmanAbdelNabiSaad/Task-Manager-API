@@ -44,12 +44,13 @@ app.get('/', (req, res) => {
     res.redirect('/api-docs');
 });
 
-const SWAGGER_UI_VERSION = '5.29.1';
+
+const SWAGGER_UI_VERSION = '5.32.11';
 const swaggerUiOptions = {
-    customCssUrl: `https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/${SWAGGER_UI_VERSION}/swagger-ui.min.css`,
+    customCssUrl: `https://cdn.jsdelivr.net/npm/swagger-ui-dist@${SWAGGER_UI_VERSION}/swagger-ui.min.css`,
     customJs: [
-        `https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/${SWAGGER_UI_VERSION}/swagger-ui-bundle.min.js`,
-        `https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/${SWAGGER_UI_VERSION}/swagger-ui-standalone-preset.min.js`,
+        `https://cdn.jsdelivr.net/npm/swagger-ui-dist@${SWAGGER_UI_VERSION}/swagger-ui-bundle.min.js`,
+        `https://cdn.jsdelivr.net/npm/swagger-ui-dist@${SWAGGER_UI_VERSION}/swagger-ui-standalone-preset.min.js`,
     ],
 };
 
