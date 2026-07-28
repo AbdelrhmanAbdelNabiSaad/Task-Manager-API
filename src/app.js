@@ -11,9 +11,11 @@ const router = require('./routes/task.routes');
 const errorMiddleware = require('./middlewares/error.middelware')
 
 
+
 app.use(helmet({
     contentSecurityPolicy: false,
 }));
+
 
 const ensureDB = async (req, res, next) => {
     try {
@@ -42,7 +44,16 @@ app.get('/', (req, res) => {
     res.redirect('/api-docs');
 });
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+const SWAGGER_UI_VERSION = '5.29.1';
+const swaggerUiOptions = {
+    customCssUrl: `https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/${SWAGGER_UI_VERSION}/swagger-ui.min.css`,
+    customJs: [
+        `https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/${SWAGGER_UI_VERSION}/swagger-ui-bundle.min.js`,
+        `https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/${SWAGGER_UI_VERSION}/swagger-ui-standalone-preset.min.js`,
+    ],
+};
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerUiOptions));
 
 app.use('/tasks', ensureDB, router);
 
